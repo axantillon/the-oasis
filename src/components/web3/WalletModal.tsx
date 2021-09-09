@@ -1,35 +1,65 @@
-import { MutableRefObject, useEffect, useRef } from "react";
+import { faAngleDoubleRight, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useWeb3React } from "@web3-react/core";
+import { InjectedConnector } from "@web3-react/injected-connector";
+import { UserRejectedRequestError, WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { injected, walletconnect } from "../../utils/web3/connectors";
 
-function useOutsideAlerter(ref: MutableRefObject<any>) {
+export default function WalletModal({handleClose, show}: {handleClose: MouseEventHandler, show: boolean}) {
+    const wrapper = useRef<any>();
+    
     useEffect(() => {
         /**
          * Alert if clicked on outside of element
          */
-        function handleClickOutside(event: Event) {
-            if (ref.current && !ref.current.contains(event.target)) {
-                alert("You clicked outside of me!");
+        function handleClickOutside(event: MouseEvent) {
+            if (wrapper.current && !wrapper.current.contains(event.target)) {
+                // @ts-ignore
+                handleClose(event);
             }
         }
 
         // Bind the event listener
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            // Unbind the event listener on clean up
-            document.removeEventListener("mousedown", handleClickOutside);
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [ref]);
-}
+    }, [wrapper, handleClose]);
 
-export default function WalletModal() {
-    const wrapper = useRef(null);
-    useOutsideAlerter(wrapper);
+    const {activate, error, connector} = useWeb3React();
+    const [activatingConnector, setActivatingConnector] = useState<any>();
+    const isUserRejectedRequestError = error instanceof UserRejectedRequestError;
+
+    useEffect(() => {
+        if (activatingConnector && activatingConnector === connector) {
+            setActivatingConnector(undefined);
+        }
+    }, [activatingConnector, connector])
+
+    async function connectWallet(connector: WalletConnectConnector | InjectedConnector): Promise<void> {
+        setActivatingConnector(connector);
+        await activate(connector, () => {}, true);
+    }
 
     return (
-        <div className="absolute top-0 left-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-20">
-            <div ref={wrapper} className="w-72 h-36 flex items-center justify-center bg-white rounded-md">
-                <span>Hello People</span>
+        <>
+        {show && 
+            <div className="absolute top-0 left-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-10">
+                <div ref={wrapper} className="w-64 h-32 flex flex-col items-center justify-center p-4 space-y-2 bg-white rounded-lg">
+                    <div onClick={() => connectWallet(injected)} className="w-full h-1/2 flex items-center px-4 py-2 space-x-4 border border-black rounded-md cursor-pointer">
+                        <FontAwesomeIcon icon={faAngleDoubleRight} size="1x"/>
+                        <span> Metamask </span>
+                    </div>
+                    <div onClick={() => connectWallet(walletconnect)} className="w-full h-1/2 flex items-center px-4 py-2 space-x-4 border border-black rounded-md cursor-pointer">
+                        <FontAwesomeIcon icon={faWallet} size="1x"/>
+                        <span> WalletConnect </span>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
+        </>
     )
 
 }
