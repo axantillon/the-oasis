@@ -16,6 +16,15 @@ export const walletconnect = new WalletConnectConnector({
   qrcode: true,
 });
 
+enum ConnectorNames {
+  Injected = "Injected",
+  WalletConnect = "WalletConnect"
+}
+
+const ConnectorByName: { [connectorName in ConnectorNames]: any } = {
+  [ConnectorNames.Injected]: injected,
+  [ConnectorNames.WalletConnect]: walletconnect,
+};
 export function getErrorMessage(error: Error | undefined) {
   if (error instanceof NoEthereumProviderError) {
     return "No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.";

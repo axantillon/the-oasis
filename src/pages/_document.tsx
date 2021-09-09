@@ -7,10 +7,10 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link
-            href="https://fonts.googleapis.com/css?family=Space+Mono&display=optional"
+            href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap"
             rel="stylesheet"
           />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon/favicon.ico" />
         </Head>
         <body className="font-space">
           <Main />

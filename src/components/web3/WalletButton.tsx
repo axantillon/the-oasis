@@ -1,12 +1,16 @@
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWeb3React } from "@web3-react/core"
-import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
+import { InjectedConnector } from "@web3-react/injected-connector";
+import { UserRejectedRequestError, WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import React, { useState, useEffect } from "react"
 import { getErrorMessage, walletconnect } from "../../utils/web3/connectors"
 import { truncate } from "../../utils/web3/tools";
+import WalletModal from './WalletModal';
 
 export default function WalletConnect() {
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const {connector, activate, account, deactivate, active, error, setError, library} = useWeb3React();
     const isUserRejectedRequestError = error instanceof UserRejectedRequestError;
@@ -32,8 +36,12 @@ export default function WalletConnect() {
         setEns();
     }, [account, library])
 
+    function openModal() {
+        
+    }
+
     
-    async function conectWallet(): Promise<void> {
+    async function conectWallet(connector: WalletConnectConnector | InjectedConnector): Promise<void> {
         setActivatingConnector(walletconnect);
         await activate(walletconnect, () => {}, true).catch((err) => {
             deactivate();
@@ -43,7 +51,7 @@ export default function WalletConnect() {
 
     return (
         <div className="flex flex-row items-center justify-center space-x-2">
-            <div onClick={conectWallet} className={'flex items-center justify-center w-48 h-12 border border-black rounded-full py-2 px-4 cursor-pointer transition duration-75 ease-in-out shadow-md hover:shadow-lg'}>
+            <div onClick={openModal} className={'flex items-center justify-center w-48 h-12 border border-black rounded-full py-2 px-4 cursor-pointer transition duration-75 ease-in-out shadow-md hover:shadow-lg'}>
                 { active
                     ? <span> {ensName} </span>
                     : <span> Connect Wallet </span> 
