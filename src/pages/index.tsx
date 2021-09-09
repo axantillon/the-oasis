@@ -25,7 +25,7 @@ const Home: NextPage = () => {
         className={`w-full transition-all duration-1000 ease-in-out ${loggedIn ? 'h-40' : 'h-full'} flex flex-col justify-center items-center space-y-4`}
       >
         <div className="text-3xl">
-            <span> The <b> Oasis </b> ddddddddddddddddddddddddddddddddddddddddddddd</span>
+            <span> The <b> Oasis </b></span>
         </div>
         <WalletButton />
       </div>

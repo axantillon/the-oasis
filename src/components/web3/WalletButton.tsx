@@ -6,7 +6,6 @@ import { UserRejectedRequestError, WalletConnectConnector } from "@web3-react/wa
 import React, { useState, useEffect } from "react"
 import { getErrorMessage, walletconnect } from "../../utils/web3/connectors"
 import { truncate } from "../../utils/web3/tools";
-import WalletModal from './WalletModal';
 
 export default function WalletConnect() {
 
@@ -37,7 +36,7 @@ export default function WalletConnect() {
     }, [account, library])
 
     function openModal() {
-        
+
     }
 
     
