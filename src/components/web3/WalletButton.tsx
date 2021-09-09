@@ -40,7 +40,7 @@ export default function WalletConnect() {
     }
 
     
-    async function conectWallet(connector: WalletConnectConnector | InjectedConnector): Promise<void> {
+    async function connectWallet(): Promise<void> {
         setActivatingConnector(walletconnect);
         await activate(walletconnect, () => {}, true).catch((err) => {
             deactivate();
@@ -50,7 +50,7 @@ export default function WalletConnect() {
 
     return (
         <div className="flex flex-row items-center justify-center space-x-2">
-            <div onClick={openModal} className={'flex items-center justify-center w-48 h-12 border border-black rounded-full py-2 px-4 cursor-pointer transition duration-75 ease-in-out shadow-md hover:shadow-lg'}>
+            <div onClick={connectWallet} className={'flex items-center justify-center w-48 h-12 border border-black rounded-full py-2 px-4 cursor-pointer transition duration-75 ease-in-out shadow-md hover:shadow-lg'}>
                 { active
                     ? <span> {ensName} </span>
                     : <span> Connect Wallet </span> 
