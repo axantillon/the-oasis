@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="w-screen h-screen">
-      <WalletModal/>
+      {/* <WalletModal/> */}
       <div 
         className={`w-full transition-all duration-1000 ease-in-out ${loggedIn ? 'h-40' : 'h-full'} flex flex-col justify-center items-center space-y-4`}
       >
