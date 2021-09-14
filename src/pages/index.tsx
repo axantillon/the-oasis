@@ -1,7 +1,8 @@
 import { useWeb3React } from '@web3-react/core';
-import type { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
-import WalletButton from '../components/web3/WalletButton'
+import type { NextPage } from 'next';
+import React, { useEffect, useState } from 'react';
+import Hub from '../components/three_d/Hub';
+import WalletButton from '../components/web3/WalletButton';
 
 const Home: NextPage = () => {
 
@@ -18,15 +19,16 @@ const Home: NextPage = () => {
   }, [active])
 
   return (
-    <div className="w-screen h-screen">
+    <div className="flex flex-col w-screen h-screen">
       <div 
-        className={`w-full transition-all duration-1000 ease-in-out ${loggedIn ? 'h-40' : 'h-full -mt-16'} flex flex-col justify-center items-center space-y-4`}
+        className={`w-full ${!loggedIn ? 'h-40' : 'h-full -mt-16'} transition-all duration-1000 ease-in-out flex flex-col justify-center items-center space-y-4`}
       >
         <div className="text-3xl">
             <span> The <b> Oasis </b></span>
         </div>
         <WalletButton />
       </div>
+      <Hub />
     </div>
   )
 }
