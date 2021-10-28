@@ -1,12 +1,11 @@
-import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
-import { getErrorMessage } from "../../utils/web3/connectors";
+import { FiPower } from "react-icons/fi";
+import { getErrorMessage } from "../../utils/web3/connectors/error";
 import { truncate } from "../../utils/web3/tools";
-import WalletModal from "./WalletModal";
+import WalletModal from "./wallet_modal";
 
-export default function WalletConnect() {
+export default function Wallet() {
 
     const [walletModalOpen, setWalletModalOpen] = useState<boolean>(false);
 
@@ -20,8 +19,7 @@ export default function WalletConnect() {
             setWalletModalOpen(false);
         }
         async function setEns() {
-            const ens = await library.lookupAddress(account);
-            if (library !== undefined && ens !== '') {
+            if (library !== undefined && await library.lookupAddress(account) !== '') {
                 setEnsName(await library.lookupAddress(account));
             }
         }
@@ -40,7 +38,7 @@ export default function WalletConnect() {
                 </div>
                 { active &&
                     <div onClick={deactivate} className="flex items-center justify-center w-8 h-8 border border-black bg-white rounded-full cursor-pointer transition duration-75 ease-in-out shadow-md hover:shadow-lg text-red-400">
-                        <FontAwesomeIcon icon={faPowerOff}/>
+                        <FiPower/>
                     </div>
                 }
                 {(error) &&  
@@ -50,3 +48,5 @@ export default function WalletConnect() {
         </div>
     )
 }
+
+

@@ -1,10 +1,9 @@
 import 'tailwindcss/tailwind.css'
-import type { AppProps } from 'next/app'
-import React from 'react'
-import Layout from '../components/layout'
-import { Web3ReactProvider } from '@web3-react/core'
-import { providers } from 'ethers'
-import '@fortawesome/fontawesome-svg-core/styles.css'
+import { Web3ReactProvider } from '@web3-react/core';
+import React from 'react';
+import { AppProps } from 'next/app';
+import Layout from '../components/layout';
+import { providers } from 'ethers';
 
 function getLibrary(provider: any, connector: any) {
   return new providers.Web3Provider(provider);

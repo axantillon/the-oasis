@@ -1,10 +1,10 @@
-import { faAngleDoubleRight, faWallet } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWeb3React } from "@web3-react/core";
-import { InjectedConnector } from "@web3-react/injected-connector";
-import { UserRejectedRequestError, WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { UserRejectedRequestError } from "@web3-react/injected-connector";
 import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { injected, walletconnect } from "../../utils/web3/connectors";
+import { FiChevronsRight, FiCreditCard } from "react-icons/fi";
+import { injected } from "../../utils/web3/connectors/injected";
+import { walletconnect } from "../../utils/web3/connectors/walletconnect";
+import { allConnectors } from "../../utils/web3/types";
 
 export default function WalletModal({handleClose, show}: {handleClose: MouseEventHandler, show: boolean}) {
     const wrapper = useRef<any>();
@@ -38,7 +38,7 @@ export default function WalletModal({handleClose, show}: {handleClose: MouseEven
         }
     }, [activatingConnector, connector])
 
-    async function connectWallet(connector: WalletConnectConnector | InjectedConnector): Promise<void> {
+    async function connectWallet(connector: allConnectors): Promise<void> {
         setActivatingConnector(connector);
         await activate(connector, () => {}, true);
     }
@@ -47,13 +47,13 @@ export default function WalletModal({handleClose, show}: {handleClose: MouseEven
         <>
         {show && 
             <div className="absolute z-50 top-0 left-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-10">
-                <div ref={wrapper} className="w-64 h-32 flex flex-col items-center justify-center p-4 space-y-2 bg-white rounded-lg">
-                    <div onClick={() => connectWallet(injected)} className="w-full h-1/2 flex items-center px-4 py-2 space-x-4 border border-black rounded-md cursor-pointer">
-                        <FontAwesomeIcon icon={faAngleDoubleRight} size="1x"/>
+                <div ref={wrapper} className="w-64 flex flex-col items-center justify-center p-4 sm:space-y-2 bg-white rounded-lg">
+                    <div onClick={() => connectWallet(injected)} className="hidden sm:flex items-center w-full h-1/2  px-4 py-2 space-x-4 border border-black rounded-md cursor-pointer">
+                        <FiChevronsRight/>
                         <span> Metamask </span>
                     </div>
                     <div onClick={() => connectWallet(walletconnect)} className="w-full h-1/2 flex items-center px-4 py-2 space-x-4 border border-black rounded-md cursor-pointer">
-                        <FontAwesomeIcon icon={faWallet} size="1x"/>
+                        <FiCreditCard/>
                         <span> WalletConnect </span>
                     </div>
                 </div>
