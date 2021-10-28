@@ -14,7 +14,7 @@ export default function Avatar({modelURL}: {modelURL: string}) {
 
     return (
         <>
-            <a.primitive {...spring} {...bind()} object={gltf.scene} position={[0,-3,0]} scale={3} />
+            <a.primitive {...spring} {...bind()} object={gltf.scene} position={[0,-3,0]} scale={2.5} />
         </>
     )
 }

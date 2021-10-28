@@ -46,7 +46,7 @@ export default function WalletModal({handleClose, show}: {handleClose: MouseEven
     return (
         <>
         {show && 
-            <div className="absolute top-0 left-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-10">
+            <div className="absolute z-50 top-0 left-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-10">
                 <div ref={wrapper} className="w-64 h-32 flex flex-col items-center justify-center p-4 space-y-2 bg-white rounded-lg">
                     <div onClick={() => connectWallet(injected)} className="w-full h-1/2 flex items-center px-4 py-2 space-x-4 border border-black rounded-md cursor-pointer">
                         <FontAwesomeIcon icon={faAngleDoubleRight} size="1x"/>

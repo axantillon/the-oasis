@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   }, [active])
 
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="relative flex flex-col w-screen h-screen">
       <div 
         className={`w-full ${loggedIn ? 'h-40' : 'h-full -mt-16'} transition-all duration-1000 ease-in-out flex flex-col justify-center items-center space-y-4`}
       >
